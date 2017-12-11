@@ -1,5 +1,6 @@
 package ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.ui;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -18,6 +19,7 @@ import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.security.RoleA
 
 
 @Title("MainMenu")
+@Theme("bowlingmanager")
 @SpringView(ui = MainUI.class,name = MainMenu.NAME)
 public class MainMenu extends VerticalLayout implements View{
     public static final String NAME = "menu";

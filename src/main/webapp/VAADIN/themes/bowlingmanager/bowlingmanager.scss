@@ -13,9 +13,11 @@ $v-app-loading-text: "Loading...";
   @include valo;
 
   .toolbar {
-    padding:  0 0 0 0;
+       padding:  0 0 0 0;
+     }
+  .v-button {
+    color: orangered;
   }
-
   .languagesComponent{
     background-color: rgb(199, 76, 141);
     margin: 0;
