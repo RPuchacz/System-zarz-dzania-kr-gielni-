@@ -32,6 +32,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('com.vaadin:vaadin-spring-boot-starter')
+	compile("com.vaadin:vaadin-themes:7.5.1")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
 	runtime('com.h2database:h2')

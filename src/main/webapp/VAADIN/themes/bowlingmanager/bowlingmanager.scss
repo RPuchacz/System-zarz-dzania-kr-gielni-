@@ -1,0 +1,36 @@
+
+
+
+@import "../valo/valo.scss";
+
+$v-font-family:"Verdana";
+
+
+$v-app-background-color: #f7f7f7;
+$v-app-loading-text: "Loading...";
+
+@mixin bowlingmanager {
+  @include valo;
+
+  .toolbar {
+    padding:  0 0 0 0;
+  }
+
+  .languagesComponent{
+    background-color: rgb(199, 76, 141);
+    margin: 0;
+    padding: 0;
+    width: auto;
+    height: 40px;
+      .v-slot{
+        width: 2% !important;
+        margin-left: -6.5% !important;
+        margin-right: 7% !important;
+        float: right; ;
+      }
+  }
+
+
+}
+
+@include bowlingmanager;
