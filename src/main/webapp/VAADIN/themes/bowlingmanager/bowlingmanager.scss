@@ -6,7 +6,7 @@
 $v-font-family:"Verdana";
 
 
-$v-app-background-color: #f7f7f7;
+$v-app-background-color: #fffae6;
 $v-app-loading-text: "Loading...";
 
 @mixin bowlingmanager {
@@ -15,8 +15,20 @@ $v-app-loading-text: "Loading...";
   .toolbar {
        padding:  0 0 0 0;
      }
-  .v-button {
-    color: orangered;
+    .v-button {
+     height: 8vw;
+     width: 14vw;
+     margin: 22px;
+     border-radius: 20px;
+     background: white;
+     box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
+     font-size: 1.5vw;
+     font-family: "Verdana";
+     color: rgb(0, 0, 0);
+     font-weight: bold;
+     line-height: 1.639;
+     text-align: center;
+
   }
   .languagesComponent{
     background-color: rgb(199, 76, 141);
