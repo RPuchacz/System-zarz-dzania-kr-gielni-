@@ -42,6 +42,7 @@ public class Header extends VerticalLayout implements View {
     public String name;
 
 
+
     @Autowired
     public Header(MessageSource messageSource, IPersonRepository personRepository){
         this.personRepository = personRepository;
@@ -91,6 +92,7 @@ public class Header extends VerticalLayout implements View {
 
         newHorizontalL.setSpacing(true);
         newHorizontalL.setMargin(true);
+        backButton.setIcon(new ThemeResource("images/backBtn.png"));
         backButton.addClickListener(event -> {
                 this.setBackButton(false,true);
                 removeComponent(headlineLayout);

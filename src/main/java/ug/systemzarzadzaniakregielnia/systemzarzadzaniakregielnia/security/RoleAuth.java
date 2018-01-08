@@ -9,9 +9,7 @@ import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IPe
 import static ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.ui.MainUI.nav;
 
 
-/**
- * Created by Filip Lisakowski on 19.12.2016.
- */
+
 
 public class RoleAuth {
     private Authentication auth = SecurityContextHolder.getContext().getAuthentication();
