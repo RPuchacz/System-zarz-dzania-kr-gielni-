@@ -28,12 +28,11 @@ public class MainMenu extends VerticalLayout implements View{
 
     private RoleAuth roleAuth;
     private Navigator nav;
-    private Button setAppointment = new Button("Umów wizytę");
+    private Button setReservation = new Button("Rezerwuj Tor");
     private Button customers = new Button("Klienci");
-    private Button appointments = new Button("Wizyty");
+    private Button reservations = new Button("Rezerwacje");
     private Button newsletter = new Button("Newsletter");
-    private Button employees = new Button("Pracownicy");
-    private Button clientData = new Button("Dane");
+    private Button alley = new Button("Tory");
     private Button graphic = new Button("Grafik");
 
     private HorizontalLayout adminMenu1;
@@ -62,8 +61,8 @@ public class MainMenu extends VerticalLayout implements View{
         switch (roleAuth.getRole()) {
             case ADMIN:
             {
-                adminMenu1.addComponents(setAppointment, appointments, customers);
-                adminMenu2.addComponents(employees, newsletter,graphic);
+                adminMenu1.addComponents(setReservation, reservations, customers);
+                adminMenu2.addComponents(alley, newsletter,graphic);
 
                 addComponents(adminMenu1, adminMenu2);
                 setComponentAlignment(adminMenu1, Alignment.MIDDLE_CENTER);
@@ -72,7 +71,7 @@ public class MainMenu extends VerticalLayout implements View{
             }
 
             case EMPLOYEE:{
-                employeeMenu1.addComponents(setAppointment, appointments);
+                employeeMenu1.addComponents(setReservation, reservations);
                 employeeMenu2.addComponents(newsletter, customers);
 
 
@@ -84,7 +83,6 @@ public class MainMenu extends VerticalLayout implements View{
 
             case CLIENT:
             {
-                forClientLayout.addComponents(clientData);
 
                 addComponent(forClientLayout);
                 setComponentAlignment(forClientLayout, Alignment.MIDDLE_CENTER);
@@ -95,20 +93,19 @@ public class MainMenu extends VerticalLayout implements View{
 
 
 
-        setAppointment.setDescription("Umów wizytę");
+        setReservation.setDescription("Rezerwuj Tor");
         customers.setDescription("Klienci");
-        appointments.setDescription("Wizyty");
+        reservations.setDescription("Rezerwacje");
         newsletter.setDescription("Newsletter");
-        employees.setDescription("Pracownicy");
+        alley.setDescription("Tory");
         graphic.setDescription("Grafik");
 
 
-        navigationButton(setAppointment,"setAppointment");
+        navigationButton(setReservation,"setReservation");
         navigationButton(customers,"customers");
-        navigationButton(appointments,"appointments");
+        navigationButton(reservations,"reservation");
         navigationButton(newsletter,"newsletter");
-        navigationButton(employees,"employees");
-        navigationButton(clientData,"settingsClient");
+        navigationButton(alley,"alley");
         navigationButton(graphic,"graphic");
 
     }
