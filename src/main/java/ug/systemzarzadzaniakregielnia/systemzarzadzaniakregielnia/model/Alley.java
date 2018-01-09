@@ -1,8 +1,11 @@
 package ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model;
 
+import javax.persistence.Entity;
+
 /**
  * Created by Lukasz on 09.01.2018.
  */
+@Entity
 public class Alley extends AbstractEntity {
     private String name;
     private int maxPersons;
