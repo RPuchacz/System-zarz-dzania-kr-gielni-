@@ -54,8 +54,8 @@ public class Header extends VerticalLayout implements View {
         languages = new HorizontalLayout();
         headlineLayout = new HorizontalLayout();
 
-        pl = new Button(/*Locale.forLanguageTag("pl").getDisplayLanguage(Locale.forLanguageTag("pl"))*/);
-        us = new Button(/*Locale.ENGLISH.getDisplayLanguage(Locale.ENGLISH)*/);
+        pl = new NativeButton(/*Locale.forLanguageTag("pl").getDisplayLanguage(Locale.forLanguageTag("pl"))*/);
+        us = new NativeButton(/*Locale.ENGLISH.getDisplayLanguage(Locale.ENGLISH)*/);
 
         pl.addClickListener(event -> {
             setLanguage(Locale.forLanguageTag("pl"));
@@ -87,6 +87,7 @@ public class Header extends VerticalLayout implements View {
         languages.setComponentAlignment(pl,Alignment.BOTTOM_RIGHT);
         languages.setComponentAlignment(us,Alignment.BOTTOM_RIGHT);
         languages.setSizeFull();
+        languages.setStyleName("languagesComponent");
         headlineLayout.addComponent(headlineLabel);
 
 

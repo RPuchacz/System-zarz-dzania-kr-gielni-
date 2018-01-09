@@ -18,7 +18,7 @@ $v-app-loading-text: "Loading...";
     .v-button {
      height: 8vw;
      width: 14vw;
-     margin: 22px;
+     margin: 1vw;
      border-radius: 20px;
      background: white;
      box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
@@ -45,6 +45,22 @@ $v-app-loading-text: "Loading...";
   }
 
 
+     .languagesComponent{
+       background-color: white;
+       margin: 0;
+       padding: 5px;
+       width: auto;
+       height: 40px;
+         .v-slot{
+           width: 2% !important;
+           margin-left: -6.5% !important;
+           margin-right: 7% !important;
+           float: right; ;
+         }
+     }
+
+
 }
+
 
 @include bowlingmanager;

@@ -8,12 +8,7 @@
 </head>
 <body>
 <div class="pasek" />
-<div class="center"><div th:if="${param.error}" class="alert alert-error">
-    Invalid username or password.
-</div></div>
-<div class="center"><div th:if="${param.logout}" class="alert alert-success">
-    You have been logged out!
-</div></div>
+
 <div id="pageload">
     <div class="logo">
         <img src="login.png" alt="logo" id="logo" />
@@ -22,6 +17,14 @@
         <div class="center">
             <br><input type="text" name="username" placeholder="Enter username..."/></br>
             <br><input type="password" name="password" placeholder="Enter password..."/></br>
+
+            <div class="center"><div th:if="${param.error}" class="alert alert-error">
+                Invalid username or password.
+            </div></div>
+            <div class="center"><div th:if="${param.logout}" class="alert alert-success">
+                You have been logged out!
+            </div></div>
+
             <br><button type="submit">Log in</button></br>
         </div>
     </form>
