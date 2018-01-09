@@ -103,7 +103,6 @@ public class MainMenu extends VerticalLayout implements View{
         graphic.setDescription("Grafik");
 
 
-
         navigationButton(setAppointment,"setAppointment");
         navigationButton(customers,"customers");
         navigationButton(appointments,"appointments");
@@ -111,6 +110,7 @@ public class MainMenu extends VerticalLayout implements View{
         navigationButton(employees,"employees");
         navigationButton(clientData,"settingsClient");
         navigationButton(graphic,"graphic");
+
     }
 
     public void navigationButton(Button button, final String pageName){

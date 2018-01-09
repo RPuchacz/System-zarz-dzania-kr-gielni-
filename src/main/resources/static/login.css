@@ -1,11 +1,6 @@
 body {
     font-family: "Verdana";
-    background-color: #f7f7f7;
-	background: url(background.jpg) no-repeat center center fixed;
-	-webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
+    background-color: #fffae6;
 }
 #logo{
     display: block;
@@ -13,7 +8,7 @@ body {
     margin-right: auto;
     margin-bottom: 20px;
     margin-top: 80px;
-    min-width:38%;
+    min-width:34%;
 }
 #pageload {
 	text-align: center;
@@ -36,14 +31,14 @@ body {
 .center > input
 {
     width: 28%;
-	height: 52px;
+	height: 48px;
 	font-size: 30px;
 
 }
 .center > button
 {
 	width:180px;
-	height: 57px;
+	height: 54px;
 	font-size: 33px;
 	margin-top: 15px;
 
