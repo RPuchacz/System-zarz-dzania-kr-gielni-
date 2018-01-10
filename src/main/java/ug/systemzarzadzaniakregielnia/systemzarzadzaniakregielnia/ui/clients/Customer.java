@@ -9,10 +9,11 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model.Address;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model.Person;
-import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IAddressRepository;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IPersonRepository;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.security.RoleAuth;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.ui.MainUI;
@@ -28,23 +29,46 @@ public class Customer extends FormLayout implements View {
     public static final String NAME = "customers";
 
     private RoleAuth roleAuth;
-
-    private  MainUI ad;
-    private HorizontalSplitPanel hsplit;
-
+    private MainUI ad;
     private List<Person> personList;
     private Grid<Person> personGrid;
-    private HorizontalLayout buttons;
-    private VerticalLayout vl;
     private Button newButton;
     private Button editButton;
     private Button deleteButton;
-    private FormLayout personLayout;
-    private FormLayout adressLayout;
+    private Button saveButton;
+    private HorizontalSplitPanel hsplit;
+    private VerticalLayout vl;
+    private HorizontalLayout buttons;
+    private HorizontalLayout vlform;
+    private VerticalLayout vlPerson;
+    private VerticalLayout vlAddress;
+    private Authentication auth;
+    private String l;
+    private Person person;
+    private Person p;
+    private Address a;
+    private Binder<Person> binder;
+    private SingleSelectionModel<Person> singleSelectionModel;
+    private TextField firstName;
+    private TextField lastName;
+    private TextField login;
+    private PasswordField password;
+    private TextField phoneNumber;
+    private TextField mail;
+    private TextField country;
+    private TextField city;
+    private TextField street;
+    private TextField postalCode;
+    private DateField dateOfBirth;
+    private CheckBox newsletter;
+    private ComboBox role;
+
 
     @Autowired
- public Customer(MainUI ad, IPersonRepository personRepository, IAddressRepository addressRepository) {
+    public Customer(MainUI ad, IPersonRepository personRepository ) {
+
      this.ad = ad;
+     roleAuth = new RoleAuth(personRepository);
      ad.header.addComponent(ad.header.headlineLayout);
      ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
      ad.header.setHeadline("Klienci");
@@ -59,41 +83,37 @@ public class Customer extends FormLayout implements View {
 
      addComponent(hsplit);
 
+        vl = new VerticalLayout();
+        buttons = new HorizontalLayout();
+        vlform = new HorizontalLayout();
+        vlPerson = new VerticalLayout();
+        vlAddress = new VerticalLayout();
         personList = personRepository.findAll();
         personGrid = new Grid<>();
-        buttons = new HorizontalLayout();
-        vl = new VerticalLayout();
         personGrid.setItems(personList);
         personGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
+        auth = SecurityContextHolder.getContext().getAuthentication();
+        l = auth.getName();
+        person = personRepository.findByLogin(l);
+        binder = new Binder<>(Person.class);
+        singleSelectionModel = (SingleSelectionModel<Person>) personGrid.getSelectionModel();
+        firstName = new TextField("Imie");
+        lastName = new TextField("Nazwisko");
+        login = new TextField("Login");
+        password = new PasswordField("Haslo");
+        phoneNumber = new TextField("Numer Telefonu");
+        mail = new TextField("E-mail");
+        country = new TextField("Kraj");
+        city = new TextField("Miasto");
+        street = new TextField("Ulica");
+        postalCode = new TextField("Kod Pocztowy");
+        dateOfBirth = new DateField("Data Urodzenia");
+        newsletter = new CheckBox("Newsletter");
+        role = new ComboBox("Uprawnienia");
+        saveButton = new Button("Zapisz");
 
-        SingleSelectionModel<Person> singleSelectionModel = (SingleSelectionModel<Person>) personGrid.getSelectionModel();
         singleSelectionModel.setDeselectAllowed(false);
-
-
-
-
-        Binder<Person> binder = new Binder<>(Person.class);
-
-        TextField firstName = new TextField("Imie");
-        TextField lastName = new TextField("Nazwisko");
-        TextField login = new TextField("Login");
-        PasswordField password = new PasswordField("Haslo");
-        TextField phoneNumber = new TextField("Numer Telefonu");
-        TextField mail = new TextField("E-mail");
-
-
-        TextField country = new TextField("Kraj");
-        TextField city = new TextField("Miasto");
-        TextField street = new TextField("Ulica");
-        TextField postalCode = new TextField("Kod Pocztowy");
-        DateField dateOfBirth = new DateField("Data Urodzenia");
-        CheckBox newsletter = new CheckBox("Newsletter");
-        ComboBox role = new ComboBox("Uprawnienia");
-
-        Button saveButton = new Button("Zapisz");
-
         role.setItems(EnumSet.allOf(Role.class));
-
 
         binder.forField(firstName).bind(Person::getFirstName,Person::setFirstName);
         binder.forField(lastName).bind(Person::getLastName,Person::setLastName);
@@ -103,29 +123,23 @@ public class Customer extends FormLayout implements View {
         binder.forField(mail).bind(Person::getMail,Person::setMail);
         binder.forField(dateOfBirth).withConverter(new LocalDateToDateConverter()).bind(Person::getDateOfBirth,Person::setDateOfBirth);
         binder.forField(newsletter).bind(Person::getNewsletter,Person::setNewsletter);
-
-
-
         binder.bind(country,"address.country");
         binder.bind(city,"address.city");
         binder.bind(street,"address.street");
         binder.bind(postalCode,"address.postalCode");
 
-        HorizontalLayout vlform = new HorizontalLayout();
-        VerticalLayout vlPerson = new VerticalLayout();
-        VerticalLayout vlAddress = new VerticalLayout();
-
         vlPerson.addComponents(firstName,lastName,dateOfBirth,login,password,mail,phoneNumber,saveButton);
-        vlAddress.addComponents(country,city,street,postalCode,newsletter,role);
+        vlAddress.addComponents(country,city,street,postalCode,newsletter);
+
+        if(person.getRole()== Role.ADMIN) {
+            vlAddress.addComponent(role);
+        }
 
         vlform.addComponents(vlPerson,vlAddress);
 
-
-
-
         newButton = new Button("New Person", event -> {
-            Person p = new Person();
-            Address a = new Address();
+            p = new Person();
+            a = new Address();
             role.addValueChangeListener(event1 -> {
                 p.setRole((Role)role.getValue());
             });
@@ -164,7 +178,8 @@ public class Customer extends FormLayout implements View {
             hsplit.removeComponent(vlform);
         });
 
-
+        editButton.setEnabled(false);
+        deleteButton.setEnabled(false);
 
         personGrid.addColumn(Person::getFirstName).setCaption("Imie");
         personGrid.addColumn(Person::getLastName).setCaption("Nazwisko");
@@ -172,16 +187,10 @@ public class Customer extends FormLayout implements View {
         personGrid.addColumn(Person::getMail).setCaption("E-mail");
         personGrid.addColumn(Person::getLoyalPoints).setCaption("Punkty");
 
-
-        editButton.setEnabled(false);
-        deleteButton.setEnabled(false);
-
         personGrid.addSelectionListener(event -> {
                 editButton.setEnabled(true);
                 deleteButton.setEnabled(true);
         });
-
-
 
         buttons.addComponents(newButton,editButton,deleteButton);
         vl.addComponents(buttons,personGrid);

@@ -71,13 +71,12 @@ public class MainMenu extends VerticalLayout implements View{
             }
 
             case EMPLOYEE:{
-                employeeMenu1.addComponents(setReservation, reservations);
-                employeeMenu2.addComponents(newsletter, customers);
+                adminMenu1.addComponents(setReservation, reservations, customers);
+                adminMenu2.addComponents(alley, newsletter,graphic);
 
-
-                addComponents(employeeMenu1, employeeMenu2);
-                setComponentAlignment(employeeMenu1, Alignment.MIDDLE_CENTER);
-                setComponentAlignment(employeeMenu2, Alignment.MIDDLE_CENTER);
+                addComponents(adminMenu1, adminMenu2);
+                setComponentAlignment(adminMenu1, Alignment.MIDDLE_CENTER);
+                setComponentAlignment(adminMenu2, Alignment.MIDDLE_CENTER);
                 break;
             }
 
