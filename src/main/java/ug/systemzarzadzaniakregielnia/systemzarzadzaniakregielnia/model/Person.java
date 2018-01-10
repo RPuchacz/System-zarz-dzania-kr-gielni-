@@ -31,7 +31,6 @@ public class Person extends AbstractEntity {
     private String password;
     private Date dateOfBirth = null;
     private boolean newsletter = false;
-    private boolean sms = false;
     @Lob
     private String detailedInformation;
     @OneToOne(optional = true, cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
@@ -126,12 +125,5 @@ public class Person extends AbstractEntity {
         this.newsletter = newsletter;
     }
 
-    public boolean getSms() {
-        return sms;
-    }
-
-    public void setSms(boolean sms) {
-        this.sms = sms;
-    }
 
 }
