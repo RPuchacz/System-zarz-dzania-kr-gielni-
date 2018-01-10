@@ -4,8 +4,6 @@ package ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 /**
  * Created by Lukasz on 2017-12-11.
@@ -15,21 +13,21 @@ public class Person extends AbstractEntity {
 
     @Enumerated
     private Role role = Role.CLIENT;
-    @NotNull(message = "Pole nie moze byc puste")
-    @Size(min = 3, max = 14, message = "Min. 3")
+    //@NotNull(message = "Pole nie moze byc puste")
+   // @Size(min = 3, max = 14, message = "Min. 3")
     private String firstName;
-    @NotNull(message = "Pole nie moze byc puste")
-    @Size(min = 3, max = 20, message = "Min. 3")
+    //@NotNull(message = "Pole nie moze byc puste")
+    //@Size(min = 3, max = 20, message = "Min. 3")
     private String lastName;
     @Column(unique = true)
     private String mail;
     private String phoneNumber;
     @Column(unique = true)
-    @NotNull(message = "Pole nie moze byc puste")
-    @Size(min = 3, max = 30, message = "Min. 3")
+   // @NotNull(message = "Pole nie moze byc puste")
+   // @Size(min = 3, max = 30, message = "Min. 3")
     private String login;
-    @NotNull(message = "Pole nie moze byc puste")
-    @Size(min = 3, max = 100, message = "Min. 3")
+    //@NotNull(message = "Pole nie moze byc puste")
+   // @Size(min = 3, max = 100, message = "Min. 3")
     private String password;
     private Date dateOfBirth = null;
     private boolean newsletter = false;
