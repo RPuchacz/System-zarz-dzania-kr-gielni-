@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 @Entity
 public class Alley extends AbstractEntity {
     private String name;
-    private int maxPersons;
-    private double price;
+    private String maxPersons;
+    private String price;
 
 
     public String getName() {
@@ -20,19 +20,19 @@ public class Alley extends AbstractEntity {
         this.name = name;
     }
 
-    public int getMaxPersons() {
+    public String getMaxPersons() {
         return maxPersons;
     }
 
-    public void setMaxPersons(int maxPersons) {
+    public void setMaxPersons(String maxPersons) {
         this.maxPersons = maxPersons;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }

@@ -73,7 +73,7 @@ public class Customer extends FormLayout implements View {
      ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
      ad.header.setHeadline("Klienci");
 
-     setHeight("1474px");
+     setHeight("874px");
      setWidth("1250px");
 
      ad.header.setBackButton(true,false);
@@ -113,6 +113,7 @@ public class Customer extends FormLayout implements View {
         saveButton = new Button("Zapisz");
 
         singleSelectionModel.setDeselectAllowed(false);
+        singleSelectionModel.deselectAll();
         role.setItems(EnumSet.allOf(Role.class));
 
         binder.forField(firstName).bind(Person::getFirstName,Person::setFirstName);
@@ -151,6 +152,7 @@ public class Customer extends FormLayout implements View {
                 personGrid.setItems();
                 personGrid.setItems(personRepository.findAll());
                 hsplit.removeComponent(vlform);
+                singleSelectionModel.deselectAll();
             });
         });
 
@@ -166,6 +168,7 @@ public class Customer extends FormLayout implements View {
                 personGrid.setItems();
                 personGrid.setItems(personRepository.findAll());
                 hsplit.removeComponent(vlform);
+                singleSelectionModel.deselectAll();
             });
         });
 
@@ -176,10 +179,9 @@ public class Customer extends FormLayout implements View {
             editButton.setEnabled(false);
             deleteButton.setEnabled(false);
             hsplit.removeComponent(vlform);
+            singleSelectionModel.deselectAll();
         });
 
-        editButton.setEnabled(false);
-        deleteButton.setEnabled(false);
 
         personGrid.addColumn(Person::getFirstName).setCaption("Imie");
         personGrid.addColumn(Person::getLastName).setCaption("Nazwisko");
@@ -204,5 +206,9 @@ public class Customer extends FormLayout implements View {
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
         ad.header.setHeadline("Klienci");
         roleAuth.Auth(Role.ADMIN, Role.EMPLOYEE);
+        singleSelectionModel.deselectAll();
+        hsplit.removeComponent(vlform);
+        editButton.setEnabled(false);
+        deleteButton.setEnabled(false);
     }
 }

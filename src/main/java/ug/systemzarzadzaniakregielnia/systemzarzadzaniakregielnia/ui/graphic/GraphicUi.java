@@ -8,6 +8,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
+import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IPersonRepository;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.security.RoleAuth;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.ui.MainUI;
 
@@ -25,7 +26,8 @@ public class GraphicUi extends FormLayout implements View {
     private  MainUI ad;
     private HorizontalSplitPanel hsplit;
 
-    public GraphicUi(MainUI ad) {
+    public GraphicUi(MainUI ad, IPersonRepository personRepository) {
+        roleAuth = new RoleAuth(personRepository);
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
