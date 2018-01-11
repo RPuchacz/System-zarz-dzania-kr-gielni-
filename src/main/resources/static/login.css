@@ -8,7 +8,7 @@ body {
     margin-right: auto;
     margin-bottom: 20px;
     margin-top: 80px;
-    min-width:34%;
+    width:30%;
 }
 #pageload {
 	text-align: center;
@@ -31,15 +31,15 @@ body {
 .center > input
 {
     width: 28%;
-	height: 48px;
-	font-size: 30px;
+	height: 43px;
+	font-size: 25px;
 
 }
 .center > button
 {
 	width:180px;
-	height: 54px;
-	font-size: 33px;
+	height: 49px;
+	font-size: 28px;
 	margin-top: 15px;
 
 }
@@ -47,5 +47,8 @@ body {
 @media screen and (max-width: 900px){
 .center > input {
 width: 75%;
+}
+#logo {
+width:65%;
 }
 }

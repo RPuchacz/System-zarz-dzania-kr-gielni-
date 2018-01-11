@@ -44,7 +44,8 @@ public class MainMenu extends VerticalLayout implements View{
 
 
     public MainMenu(IPersonRepository personRepository) {
-        this.setWidth("1200px");
+        setStyleName("mainMenuButton");
+
         this.personRepository = personRepository;
 
         roleAuth = new RoleAuth(personRepository);

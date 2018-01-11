@@ -58,6 +58,7 @@ public class MainUI extends UI {
 		vl.setSpacing(true);
 		setContent(vl);
 		vl.setComponentAlignment(mainView, Alignment.MIDDLE_CENTER);
+		vl.setStyleName("toolbar");
         nav = new Navigator(this, mainView);
         nav.addProvider(viewProvider);
         nav.navigateTo("menu");

@@ -34,6 +34,7 @@ public class Header extends VerticalLayout implements View {
     public Button backButton = new Button();
     private Button pl;
     private Button us;
+    public Image logo;
     IPersonRepository personRepository;
     private HorizontalLayout languages;
     public HorizontalLayout headlineLayout;
@@ -53,6 +54,7 @@ public class Header extends VerticalLayout implements View {
         nameLbl = new Label(person.getFirstName() + " " + person.getLastName());
         languages = new HorizontalLayout();
         headlineLayout = new HorizontalLayout();
+        logo = new Image(null,new ThemeResource("images/logoB.png"));
 
         pl = new NativeButton(/*Locale.forLanguageTag("pl").getDisplayLanguage(Locale.forLanguageTag("pl"))*/);
         us = new NativeButton(/*Locale.ENGLISH.getDisplayLanguage(Locale.ENGLISH)*/);
@@ -76,17 +78,24 @@ public class Header extends VerticalLayout implements View {
         backButton.setWidth(null);
         headline.setWidth(null);
         headline.setVisible(false);
+        headline.setStyleName("headerLabel");
+        hl.setStyleName("januszProgramowania");
         hl.setSizeUndefined();
         hl.addComponents(nameLbl,logout);
         languages.addComponents(pl,us);
 
+        imageLa.addComponent(logo);
         newHorizontalL.addComponents(backButton,imageLa,headline,hl);
+        newHorizontalL.setStyleName("header");
+        imageLa.setStyleName("imageLa");
+        logo.setStyleName("logoImage");
         newHorizontalL.setComponentAlignment(backButton,Alignment.TOP_LEFT);
         newHorizontalL.setComponentAlignment(headline,Alignment.TOP_CENTER);
         addComponents(languages,newHorizontalL);
         languages.setComponentAlignment(pl,Alignment.BOTTOM_RIGHT);
         languages.setComponentAlignment(us,Alignment.BOTTOM_RIGHT);
         languages.setSizeFull();
+        backButton.setStyleName("BackButton");
         languages.setStyleName("languagesComponent");
         headlineLayout.addComponent(headlineLabel);
 
