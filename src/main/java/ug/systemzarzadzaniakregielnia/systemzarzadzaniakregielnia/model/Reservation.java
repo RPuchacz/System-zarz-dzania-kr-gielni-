@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
  */
 @Entity
 public class Reservation extends AbstractEntity {
-    @ManyToOne(optional = true, cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToOne(optional = true, cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Alley alley;
-    @ManyToOne(optional = true, cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToOne(optional = true, cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Person person;
     private LocalDateTime startDate;
     private LocalDateTime endTime;

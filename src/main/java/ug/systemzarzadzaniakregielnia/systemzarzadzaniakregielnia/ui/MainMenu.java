@@ -34,6 +34,8 @@ public class MainMenu extends VerticalLayout implements View{
     private Button newsletter = new Button("Newsletter");
     private Button alley = new Button("Tory");
     private Button graphic = new Button("Grafik");
+    private Button asClient = new Button("Informacje");
+
 
     private HorizontalLayout adminMenu1;
     private HorizontalLayout adminMenu2;
@@ -83,7 +85,7 @@ public class MainMenu extends VerticalLayout implements View{
 
             case CLIENT:
             {
-
+                forClientLayout.addComponent(asClient);
                 addComponent(forClientLayout);
                 setComponentAlignment(forClientLayout, Alignment.MIDDLE_CENTER);
                 break;
@@ -99,6 +101,7 @@ public class MainMenu extends VerticalLayout implements View{
         newsletter.setDescription("Newsletter");
         alley.setDescription("Tory");
         graphic.setDescription("Grafik");
+        asClient.setDescription("Informacje");
 
 
         navigationButton(setReservation,"setReservation");
@@ -107,6 +110,7 @@ public class MainMenu extends VerticalLayout implements View{
         navigationButton(newsletter,"newsletter");
         navigationButton(alley,"alley");
         navigationButton(graphic,"graphic");
+        navigationButton(asClient,"asClientUi");
 
     }
 

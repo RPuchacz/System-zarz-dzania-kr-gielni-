@@ -87,6 +87,7 @@ public class Header extends VerticalLayout implements View {
         imageLa.addComponent(logo);
         newHorizontalL.addComponents(backButton,imageLa,headline,hl);
         newHorizontalL.setStyleName("header");
+        newHorizontalL.setComponentAlignment(hl,Alignment.TOP_RIGHT);
         imageLa.setStyleName("imageLa");
         logo.setStyleName("logoImage");
         newHorizontalL.setComponentAlignment(backButton,Alignment.TOP_LEFT);

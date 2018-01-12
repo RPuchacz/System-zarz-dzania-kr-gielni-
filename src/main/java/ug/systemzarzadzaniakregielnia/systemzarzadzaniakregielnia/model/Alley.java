@@ -35,4 +35,9 @@ public class Alley extends AbstractEntity {
     public void setPrice(String price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

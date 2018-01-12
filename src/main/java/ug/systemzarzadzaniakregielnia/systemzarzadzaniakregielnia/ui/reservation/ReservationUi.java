@@ -6,9 +6,12 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalSplitPanel;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
+import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model.Reservation;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IPersonRepository;
+import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IReservationRepository;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.security.RoleAuth;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.ui.MainUI;
 
@@ -25,8 +28,9 @@ public class ReservationUi extends FormLayout implements View {
 
     private  MainUI ad;
     private HorizontalSplitPanel hsplit;
+    private Grid<Reservation> reservationGrid;
 
-    public ReservationUi(MainUI ad, IPersonRepository personRepository) {
+    public ReservationUi(MainUI ad, IPersonRepository personRepository, IReservationRepository reservationRepository) {
         roleAuth = new RoleAuth(personRepository);
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
@@ -36,9 +40,18 @@ public class ReservationUi extends FormLayout implements View {
         setHeight("474px");
         setWidth("1250px");
         ad.header.setBackButton(true,false);
+
+        reservationGrid = new Grid<>(Reservation.class);
         hsplit = new HorizontalSplitPanel();
+
+        reservationGrid.setItems(reservationRepository.findAll());
+
+        hsplit.setFirstComponent(reservationGrid);
+
         hsplit.setSizeFull();
         addComponent(hsplit);
+
+
 
     }
 
