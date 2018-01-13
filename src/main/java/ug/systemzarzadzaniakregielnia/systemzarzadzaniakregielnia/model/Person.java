@@ -125,5 +125,7 @@ public class Person extends AbstractEntity {
         this.newsletter = newsletter;
     }
 
-
+    public String toString(){
+        return firstName + " " + lastName + " " + phoneNumber;
+    }
 }

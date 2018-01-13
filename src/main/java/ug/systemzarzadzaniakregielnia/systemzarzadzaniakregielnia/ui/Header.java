@@ -84,6 +84,7 @@ public class Header extends VerticalLayout implements View {
         hl.addComponents(nameLbl,logout);
         languages.addComponents(pl,us);
 
+
         imageLa.addComponent(logo);
         newHorizontalL.addComponents(backButton,imageLa,headline,hl);
         newHorizontalL.setStyleName("header");
@@ -93,8 +94,7 @@ public class Header extends VerticalLayout implements View {
         newHorizontalL.setComponentAlignment(backButton,Alignment.TOP_LEFT);
         newHorizontalL.setComponentAlignment(headline,Alignment.TOP_CENTER);
         addComponents(languages,newHorizontalL);
-        languages.setComponentAlignment(pl,Alignment.BOTTOM_RIGHT);
-        languages.setComponentAlignment(us,Alignment.BOTTOM_RIGHT);
+
         languages.setSizeFull();
         backButton.setStyleName("BackButton");
         languages.setStyleName("languagesComponent");

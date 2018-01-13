@@ -7,6 +7,7 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.config.Sender;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model.Alley;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model.Person;
@@ -16,6 +17,8 @@ import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IPe
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IReservationRepository;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.security.RoleAuth;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.ui.MainUI;
+
+import javax.mail.MessagingException;
 
 /**
  * Created by Lukasz on 09.01.2018.
@@ -87,6 +90,12 @@ public class SetReservationUi extends FormLayout implements View {
             reservation.setStartDate(startTime.getValue());
             reservation.setEndTime(endTime.getValue());
             reservationRepository.save(reservation);
+            try {
+                Sender.sendEmail(personSingleSelectionModel.getSelectedItem().get().getMail(),"Dziekujemy za Rezerwacje!","Dziekujemy za rezerwacje toru w dniu " +
+                       startTime.getValue().toLocalDate() + " w godzinach od " + startTime.getValue().toLocalTime() + " do " + endTime.getValue().toLocalTime());
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
             vl.removeAllComponents();
             personSingleSelectionModel.deselectAll();
         });
@@ -116,5 +125,6 @@ public class SetReservationUi extends FormLayout implements View {
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
         ad.header.setHeadline("Nowa Rezerwacja");
         roleAuth.Auth(Role.ADMIN, Role.EMPLOYEE);
+        hsplit.setSecondComponent(null);
     }
 }
