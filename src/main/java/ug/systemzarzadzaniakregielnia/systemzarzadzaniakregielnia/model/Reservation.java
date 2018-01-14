@@ -1,5 +1,7 @@
 package ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model;
 
+import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.State;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +19,7 @@ public class Reservation extends AbstractEntity {
     private Person person;
     private LocalDateTime startDate;
     private LocalDateTime endTime;
+    private State state = State.PENDING;
 
 
     public Alley getAlley() {
@@ -49,5 +52,13 @@ public class Reservation extends AbstractEntity {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

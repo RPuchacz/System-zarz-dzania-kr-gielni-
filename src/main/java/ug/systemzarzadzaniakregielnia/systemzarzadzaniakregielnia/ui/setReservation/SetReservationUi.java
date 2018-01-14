@@ -125,6 +125,7 @@ public class SetReservationUi extends FormLayout implements View {
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
         ad.header.setHeadline("Nowa Rezerwacja");
         roleAuth.Auth(Role.ADMIN, Role.EMPLOYEE);
-        hsplit.setSecondComponent(null);
+        personSingleSelectionModel.deselectAll();
+        vl.removeAllComponents();
     }
 }

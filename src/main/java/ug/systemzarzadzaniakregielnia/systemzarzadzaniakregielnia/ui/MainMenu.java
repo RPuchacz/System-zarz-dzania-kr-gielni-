@@ -58,6 +58,7 @@ public class MainMenu extends VerticalLayout implements View{
         employeeMenu2 = new HorizontalLayout();
         forClientLayout = new HorizontalLayout();
 
+
         setSpacing(true);
         setMargin(true);
 
