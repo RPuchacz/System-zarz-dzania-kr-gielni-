@@ -18,7 +18,7 @@ public class Reservation extends AbstractEntity {
     @ManyToOne(optional = true, cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Person person;
     private LocalDateTime startDate;
-    private LocalDateTime endTime;
+    private int time;
     private State state = State.PENDING;
 
 
@@ -46,12 +46,12 @@ public class Reservation extends AbstractEntity {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public int getTime() {
+        return time;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public State getState() {

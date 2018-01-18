@@ -126,6 +126,6 @@ public class Person extends AbstractEntity {
     }
 
     public String toString(){
-        return firstName + " " + lastName + " " + phoneNumber;
+        return firstName + " " + lastName;
     }
 }

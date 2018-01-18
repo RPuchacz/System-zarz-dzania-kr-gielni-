@@ -19,6 +19,7 @@ import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.security.RoleA
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.ui.MainUI;
 
 import javax.mail.MessagingException;
+import java.util.List;
 
 /**
  * Created by Lukasz on 09.01.2018.
@@ -40,9 +41,13 @@ public class SetReservationUi extends FormLayout implements View {
     private SingleSelectionModel<Person> personSingleSelectionModel;
     private SingleSelectionModel<Alley> alleySingleSelectionModel;
     private DateTimeField startTime;
-    private DateTimeField endTime;
+    private NativeSelect<Integer> time;
     private Button reservationButton;
     private Reservation reservation;
+    private Panel panel;
+    private FormLayout fl;
+    private Window window;
+    private List<Reservation> reservations;
 
     @Autowired
     public SetReservationUi(MainUI ad, IPersonRepository personRepository, IAlleyRepository alleyRepository, IReservationRepository reservationRepository) {
@@ -58,13 +63,18 @@ public class SetReservationUi extends FormLayout implements View {
         hsplit = new HorizontalSplitPanel();
         hl = new VerticalLayout();
         vl = new HorizontalLayout();
-        personGrid = new Grid<>(Person.class);
+        personGrid = new Grid<>();
         reservationButton = new Button("Rezerwuj");
         startTime = new DateTimeField();
-        endTime = new DateTimeField();
+        time = new NativeSelect<>();
         alleyNativeSelect = new NativeSelect<>();
         personGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
         personSingleSelectionModel = (SingleSelectionModel<Person>) personGrid.getSelectionModel();
+        time.setItems(1,2,3,4,5,6,7,8,9,10);
+        panel = new Panel("Rezerwacje dla wybranego Toru");
+        fl = new FormLayout();
+        window = new Window();
+        reservations = reservationRepository.getAllByAlley(alleyNativeSelect.getValue());
 
         personGrid.setItems(personRepository.findAll());
         alleyNativeSelect.setItems(alleyRepository.findAll());
@@ -72,11 +82,16 @@ public class SetReservationUi extends FormLayout implements View {
 
         alleyNativeSelect.setCaption("Wybierz Tor");
         startTime.setCaption("Poczatek Rezerwacji");
-        endTime.setCaption("Koniec Rezerwacji");
+        time.setCaption("Czas trwania");
         alleyNativeSelect.setVisibleItemCount(5);
 
         personGrid.addSelectionListener(event -> {
-            vl.addComponents(alleyNativeSelect);
+            if (vl.getComponentIndex(alleyNativeSelect) >= 0){
+
+            } else {
+                vl.addComponents(alleyNativeSelect);
+            }
+
         });
 
         alleyNativeSelect.addSelectionListener(event -> {
@@ -88,11 +103,11 @@ public class SetReservationUi extends FormLayout implements View {
             reservation.setAlley(alleyNativeSelect.getValue());
             reservation.setPerson(personSingleSelectionModel.getSelectedItem().get());
             reservation.setStartDate(startTime.getValue());
-            reservation.setEndTime(endTime.getValue());
+            reservation.setTime(time.getValue());
             reservationRepository.save(reservation);
             try {
                 Sender.sendEmail(personSingleSelectionModel.getSelectedItem().get().getMail(),"Dziekujemy za Rezerwacje!","Dziekujemy za rezerwacje toru w dniu " +
-                       startTime.getValue().toLocalDate() + " w godzinach od " + startTime.getValue().toLocalTime() + " do " + endTime.getValue().toLocalTime());
+                       startTime.getValue().toLocalDate() + " w godzinach od " + startTime.getValue().toLocalTime());
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
@@ -100,10 +115,20 @@ public class SetReservationUi extends FormLayout implements View {
             personSingleSelectionModel.deselectAll();
         });
 
+        startTime.addValueChangeListener(event -> {
+            panel.setContent(fl);
+            window.setContent(panel);
+            fl.removeAllComponents();
+            for(Reservation r : reservations) {
+                fl.addComponent(new Label("Rezerwacja" + " " + r.getStartDate().toString() + " do " + r.getStartDate().plusHours(r.getTime())));
+            }
+            this.getUI().addWindow(window);
+            window.center();
+        });
 
         hsplit.setFirstComponent(personGrid);
         hsplit.setSecondComponent(vl);
-        hl.addComponents(startTime,endTime,reservationButton);
+        hl.addComponents(startTime,time,reservationButton);
 
         hsplit.setSizeFull();
         addComponent(hsplit);
@@ -125,7 +150,6 @@ public class SetReservationUi extends FormLayout implements View {
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
         ad.header.setHeadline("Nowa Rezerwacja");
         roleAuth.Auth(Role.ADMIN, Role.EMPLOYEE);
-        personSingleSelectionModel.deselectAll();
         vl.removeAllComponents();
     }
 }

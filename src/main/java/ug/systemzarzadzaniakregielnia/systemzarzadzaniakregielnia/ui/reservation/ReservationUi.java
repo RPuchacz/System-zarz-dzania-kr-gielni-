@@ -40,7 +40,7 @@ public class ReservationUi extends FormLayout implements View {
     private Label phoneNumber;
     private Label price;
     private Label startDate;
-    private Label endDate;
+    private Label time;
     private NativeSelect<State> setState;
     private Button saveButton;
     private Reservation reservation;
@@ -74,7 +74,7 @@ public class ReservationUi extends FormLayout implements View {
         phoneNumber = new Label();
         price = new Label();
         startDate = new Label();
-        endDate = new Label();
+        time = new Label();
         edit = new Button("Edytuj");
 
         price.setCaption("Cena za godzine");
@@ -83,7 +83,7 @@ public class ReservationUi extends FormLayout implements View {
         mail.setCaption("E-Mail");
         phoneNumber.setCaption("Numer Telefonu");
         startDate.setCaption("Poczatek");
-        endDate.setCaption("Koniec");
+        time.setCaption("Czas trwania");
 
         singleSelectionModel.setDeselectAllowed(false);
         reservationGrid.setItems(reservationRepository.findAll());
@@ -106,9 +106,9 @@ public class ReservationUi extends FormLayout implements View {
         });
 
         clean.addClickListener(event -> {
+            stateSelect.setSelectedItem(null);
             reservationGrid.setItems();
             reservationGrid.setItems(reservationRepository.findAll());
-            stateSelect.setSelectedItem(null);
         });
 
         reservationGrid.addSelectionListener(event -> {
@@ -130,6 +130,8 @@ public class ReservationUi extends FormLayout implements View {
             reservation = singleSelectionModel.getSelectedItem().get();
             reservation.setState(setState.getValue());
             reservationRepository.save(reservation);
+            reservationGrid.setItems();
+            reservationGrid.setItems(reservationRepository.findAll());
             hl.removeAllComponents();
             edit.setEnabled(false);
             delete.setEnabled(false);
@@ -144,8 +146,8 @@ public class ReservationUi extends FormLayout implements View {
             phoneNumber.setValue(singleSelectionModel.getSelectedItem().get().getPerson().getPhoneNumber());
             price.setValue(singleSelectionModel.getSelectedItem().get().getAlley().getPrice());
             startDate.setValue(singleSelectionModel.getSelectedItem().get().getStartDate().toString());
-            endDate.setValue(singleSelectionModel.getSelectedItem().get().getEndTime().toString());
-            hl.addComponents(new VerticalLayout(firstName,lastName,mail,phoneNumber),new VerticalLayout(price,startDate,endDate,setState,saveButton));
+            time.setValue(""+singleSelectionModel.getSelectedItem().get().getTime());
+            hl.addComponents(new VerticalLayout(firstName,lastName,mail,phoneNumber),new VerticalLayout(price,startDate,time,setState,saveButton));
         });
     }
 

@@ -5,15 +5,20 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.components.ReservationPanel;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model.Person;
+import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model.Reservation;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IPersonRepository;
+import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IReservationRepository;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.security.RoleAuth;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.ui.MainUI;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -28,9 +33,12 @@ public class asClientUi extends FormLayout implements View {
     private RoleAuth roleAuth;
     private  MainUI ad;
     private Person person;
+    private List<Reservation> reservationList;
     private HorizontalLayout hl;
+    private HorizontalSplitPanel hsp;
     private VerticalLayout info;
     private VerticalLayout address;
+    private VerticalLayout reservationLayout;
     private CheckBox newsletter;
     private Label firstName;
     private Label lastName;
@@ -47,14 +55,18 @@ public class asClientUi extends FormLayout implements View {
 
 
 
-    public asClientUi(MainUI ad, IPersonRepository personRepository) {
+    @Autowired
+    public asClientUi(MainUI ad, IPersonRepository personRepository, IReservationRepository reservationRepository) {
         roleAuth = new RoleAuth(personRepository);
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
-        ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
         ad.header.setHeadline("Informacje");
+        setWidth("1350px");
 
         person = personRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        hsp = new HorizontalSplitPanel();
+        hsp.setWidth("1250px");
 
         info = new VerticalLayout();
         address = new VerticalLayout();
@@ -72,6 +84,11 @@ public class asClientUi extends FormLayout implements View {
         street = new Label(person.getAddress().getStreet());
         postalCode = new Label(person.getAddress().getPostalCode());
         fl = new FormLayout();
+        reservationList = reservationRepository.getAllByPerson(person);
+        reservationLayout = new VerticalLayout();
+        reservationLayout.setCaption("Rezerwacje");
+
+
 
         fl.setSizeFull();
 
@@ -88,6 +105,7 @@ public class asClientUi extends FormLayout implements View {
         city.setCaption("Miasto : ");
         street.setCaption("Ulica : ");
         postalCode.setCaption("Kod Pocztowy : ");
+
 
         newsletter.setValue(person.getNewsletter());
 
@@ -106,10 +124,20 @@ public class asClientUi extends FormLayout implements View {
 
         setSizeFull();
         ad.header.setBackButton(true,false);
-        addComponent(fl);
 
 
-        setComponentAlignment(fl,Alignment.MIDDLE_CENTER);
+        for(Reservation r : reservationList){
+            reservationLayout.addComponent(new ReservationPanel("Rezerwacja dnia : " + r.getStartDate().toLocalDate() + " Godzina " + r.getStartDate().getHour()+":"+r.getStartDate().getMinute(),
+                    r.getAlley().getPrice().toString(),r.getAlley().getMaxPersons().toString(),r.getAlley().getName(),""+r.getTime(),r.getPerson().getFirstName() + " " + r.getPerson().getLastName()));
+        }
+
+        fl.setSizeFull();
+        hsp.setSizeFull();
+        hsp.setFirstComponent(fl);
+        hsp.setSecondComponent(reservationLayout);
+        addComponent(hsp);
+
+
 
 
     }
