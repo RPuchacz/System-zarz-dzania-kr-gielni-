@@ -10,6 +10,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
+import org.springframework.context.MessageSource;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IPersonRepository;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.security.RoleAuth;
 
@@ -45,7 +46,7 @@ public class MainMenu extends VerticalLayout implements View{
 
 
 
-    public MainMenu(IPersonRepository personRepository) {
+    public MainMenu(IPersonRepository personRepository,MessageSource messageSource) {
         setStyleName("mainMenuButton");
 
         this.personRepository = personRepository;
@@ -66,7 +67,7 @@ public class MainMenu extends VerticalLayout implements View{
             case ADMIN:
             {
                 adminMenu1.addComponents(setReservation, reservations, customers);
-                adminMenu2.addComponents(alley, newsletter,graphic);
+                adminMenu2.addComponents(alley, newsletter,asClient);
 
                 addComponents(adminMenu1, adminMenu2);
                 setComponentAlignment(adminMenu1, Alignment.MIDDLE_CENTER);
@@ -76,7 +77,7 @@ public class MainMenu extends VerticalLayout implements View{
 
             case EMPLOYEE:{
                 adminMenu1.addComponents(setReservation, reservations, customers);
-                adminMenu2.addComponents(alley, newsletter,graphic);
+                adminMenu2.addComponents(alley, newsletter,asClient);
 
                 addComponents(adminMenu1, adminMenu2);
                 setComponentAlignment(adminMenu1, Alignment.MIDDLE_CENTER);

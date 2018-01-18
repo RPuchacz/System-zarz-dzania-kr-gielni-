@@ -9,6 +9,7 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
@@ -65,7 +66,7 @@ public class Customer extends FormLayout implements View {
 
 
     @Autowired
-    public Customer(MainUI ad, IPersonRepository personRepository ) {
+    public Customer(MainUI ad, IPersonRepository personRepository ,MessageSource messageSource) {
 
      this.ad = ad;
      roleAuth = new RoleAuth(personRepository);

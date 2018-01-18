@@ -8,6 +8,7 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model.Alley;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IAlleyRepository;
@@ -45,7 +46,7 @@ public class AlleyUi extends FormLayout implements View {
 
 
     @Autowired
-    public AlleyUi(MainUI ad, IPersonRepository personRepository, IAlleyRepository alleyRepository) {
+    public AlleyUi(MainUI ad, IPersonRepository personRepository, IAlleyRepository alleyRepository,MessageSource messageSource) {
 
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);

@@ -6,6 +6,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.components.ReservationPanel;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
@@ -56,18 +57,20 @@ public class asClientUi extends FormLayout implements View {
 
 
     @Autowired
-    public asClientUi(MainUI ad, IPersonRepository personRepository, IReservationRepository reservationRepository) {
+    public asClientUi(MainUI ad, IPersonRepository personRepository, IReservationRepository reservationRepository,MessageSource messageSource) {
         roleAuth = new RoleAuth(personRepository);
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setHeadline("Informacje");
-        setWidth("1350px");
+        setWidth("1550px");
+
 
         person = personRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 
         hsp = new HorizontalSplitPanel();
         hsp.setWidth("1250px");
-
+        hsp.setSplitPosition(56, Unit.PERCENTAGE);
+        hsp.setLocked(true);
         info = new VerticalLayout();
         address = new VerticalLayout();
         hl = new HorizontalLayout();

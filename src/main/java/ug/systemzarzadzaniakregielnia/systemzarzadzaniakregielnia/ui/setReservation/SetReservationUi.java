@@ -7,6 +7,7 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.config.Sender;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model.Alley;
@@ -19,6 +20,7 @@ import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.security.RoleA
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.ui.MainUI;
 
 import javax.mail.MessagingException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,9 +50,11 @@ public class SetReservationUi extends FormLayout implements View {
     private FormLayout fl;
     private Window window;
     private List<Reservation> reservations;
+    private List<Reservation> re;
+    private Button showReservations;
 
     @Autowired
-    public SetReservationUi(MainUI ad, IPersonRepository personRepository, IAlleyRepository alleyRepository, IReservationRepository reservationRepository) {
+    public SetReservationUi(MainUI ad, IPersonRepository personRepository, IAlleyRepository alleyRepository, IReservationRepository reservationRepository,MessageSource messageSource) {
         roleAuth = new RoleAuth(personRepository);
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
@@ -74,7 +78,10 @@ public class SetReservationUi extends FormLayout implements View {
         panel = new Panel("Rezerwacje dla wybranego Toru");
         fl = new FormLayout();
         window = new Window();
-        reservations = reservationRepository.getAllByAlley(alleyNativeSelect.getValue());
+        showReservations = new Button("Pokaz Rezerwacje");
+        showReservations.setEnabled(false);
+
+
 
         personGrid.setItems(personRepository.findAll());
         alleyNativeSelect.setItems(alleyRepository.findAll());
@@ -96,6 +103,15 @@ public class SetReservationUi extends FormLayout implements View {
 
         alleyNativeSelect.addSelectionListener(event -> {
             vl.addComponent(hl);
+            if(startTime.getValue()!=null) {
+                re = reservationRepository.getAllByAlley(alleyNativeSelect.getValue());
+                reservations = new ArrayList<>();
+                for (Reservation r : re) {
+                    if (r.getStartDate().toLocalDate().getDayOfMonth() == startTime.getValue().toLocalDate().getDayOfMonth()) {
+                        reservations.add(r);
+                    }
+                }
+            }
         });
 
         reservationButton.addClickListener(event -> {
@@ -116,19 +132,36 @@ public class SetReservationUi extends FormLayout implements View {
         });
 
         startTime.addValueChangeListener(event -> {
+            showReservations.setEnabled(true);
+            re = reservationRepository.getAllByAlley(alleyNativeSelect.getValue());
+            reservations = new ArrayList<>();
+            for (Reservation r:re){
+                if(r.getStartDate().toLocalDate().getDayOfMonth() == startTime.getValue().toLocalDate().getDayOfMonth()) {
+                    reservations.add(r);
+                }
+            }
+        });
+
+        showReservations.addClickListener(event -> {
+            fl.removeAllComponents();
+            if (reservations.size() == 0) {
+                fl.addComponent(new Label("Brak rezerwacji tego dnia"));
+            }
+            for(Reservation r : reservations) {
+                fl.addComponent(new Label("Rezerwacja : " + " " + r.getStartDate().toLocalDate() + " " + r.getStartDate().getHour() + ":" + r.getStartDate().getMinute() + " do " + r.getStartDate().plusHours(r.getTime()).getHour()+":"+r.getStartDate().getMinute()));
+            }
             panel.setContent(fl);
             window.setContent(panel);
-            fl.removeAllComponents();
-            for(Reservation r : reservations) {
-                fl.addComponent(new Label("Rezerwacja" + " " + r.getStartDate().toString() + " do " + r.getStartDate().plusHours(r.getTime())));
-            }
             this.getUI().addWindow(window);
+            window.setDraggable(true);
+            window.setResizable(true);
+            window.setWidth("500px");
             window.center();
         });
 
         hsplit.setFirstComponent(personGrid);
         hsplit.setSecondComponent(vl);
-        hl.addComponents(startTime,time,reservationButton);
+        hl.addComponents(startTime,time,new HorizontalLayout(showReservations,reservationButton));
 
         hsplit.setSizeFull();
         addComponent(hsplit);

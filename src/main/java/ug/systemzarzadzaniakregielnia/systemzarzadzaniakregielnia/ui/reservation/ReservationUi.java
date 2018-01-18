@@ -7,6 +7,7 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.Role;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.enumeration.State;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.model.Reservation;
@@ -48,7 +49,7 @@ public class ReservationUi extends FormLayout implements View {
     private Button edit;
 
     @Autowired
-    public ReservationUi(MainUI ad, IPersonRepository personRepository, IReservationRepository reservationRepository) {
+    public ReservationUi(MainUI ad, IPersonRepository personRepository, IReservationRepository reservationRepository,MessageSource messageSource) {
         roleAuth = new RoleAuth(personRepository);
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
