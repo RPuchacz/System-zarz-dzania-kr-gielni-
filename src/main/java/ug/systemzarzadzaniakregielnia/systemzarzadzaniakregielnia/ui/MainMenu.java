@@ -6,10 +6,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import org.springframework.context.MessageSource;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.repository.IPersonRepository;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.security.RoleAuth;
@@ -29,19 +26,16 @@ public class MainMenu extends VerticalLayout implements View{
 
     private RoleAuth roleAuth;
     private Navigator nav;
-    private Button setReservation = new Button("Rezerwuj Tor");
-    private Button customers = new Button("Klienci");
-    private Button reservations = new Button("Rezerwacje");
-    private Button newsletter = new Button("Newsletter");
-    private Button alley = new Button("Tory");
-    private Button graphic = new Button("Grafik");
-    private Button asClient = new Button("Informacje");
+    private Button setReservation = new Button();
+    private Button customers = new Button();
+    private Button reservations = new Button();
+    private Button newsletter = new Button();
+    private Button alley = new Button();
+    private Button asClient = new Button();
 
 
     private HorizontalLayout adminMenu1;
     private HorizontalLayout adminMenu2;
-    private HorizontalLayout employeeMenu1;
-    private HorizontalLayout employeeMenu2;
     private HorizontalLayout forClientLayout;
 
 
@@ -55,8 +49,6 @@ public class MainMenu extends VerticalLayout implements View{
 
         adminMenu1 = new HorizontalLayout();
         adminMenu2 = new HorizontalLayout();
-        employeeMenu1 = new HorizontalLayout();
-        employeeMenu2 = new HorizontalLayout();
         forClientLayout = new HorizontalLayout();
 
 
@@ -96,14 +88,19 @@ public class MainMenu extends VerticalLayout implements View{
         }
 
 
+        setReservation.setCaption(messageSource.getMessage("common.newReservation",null, UI.getCurrent().getLocale()));
+        customers.setCaption(messageSource.getMessage("common.clients",null, UI.getCurrent().getLocale()));
+        reservations.setCaption(messageSource.getMessage("common.reservations",null, UI.getCurrent().getLocale()));
+        newsletter.setCaption(messageSource.getMessage("common.newsletter",null, UI.getCurrent().getLocale()));
+        alley.setCaption(messageSource.getMessage("common.alleys",null, UI.getCurrent().getLocale()));
+        asClient.setCaption(messageSource.getMessage("common.information",null, UI.getCurrent().getLocale()));
 
-        setReservation.setDescription("Rezerwuj Tor");
-        customers.setDescription("Klienci");
-        reservations.setDescription("Rezerwacje");
-        newsletter.setDescription("Newsletter");
-        alley.setDescription("Tory");
-        graphic.setDescription("Grafik");
-        asClient.setDescription("Informacje");
+        setReservation.setDescription(messageSource.getMessage("common.newReservation",null, UI.getCurrent().getLocale()));
+        customers.setDescription(messageSource.getMessage("common.clients",null, UI.getCurrent().getLocale()));
+        reservations.setDescription(messageSource.getMessage("common.reservations",null, UI.getCurrent().getLocale()));
+        newsletter.setDescription(messageSource.getMessage("common.newsletter",null, UI.getCurrent().getLocale()));
+        alley.setDescription(messageSource.getMessage("common.alleys",null, UI.getCurrent().getLocale()));
+        asClient.setDescription(messageSource.getMessage("common.information",null, UI.getCurrent().getLocale()));
 
 
         navigationButton(setReservation,"setReservation");
@@ -111,7 +108,6 @@ public class MainMenu extends VerticalLayout implements View{
         navigationButton(reservations,"reservation");
         navigationButton(newsletter,"newsletter");
         navigationButton(alley,"alley");
-        navigationButton(graphic,"graphic");
         navigationButton(asClient,"asClientUi");
 
     }

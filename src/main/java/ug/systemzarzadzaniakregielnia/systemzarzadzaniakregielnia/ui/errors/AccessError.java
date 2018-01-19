@@ -5,6 +5,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import ug.systemzarzadzaniakregielnia.systemzarzadzaniakregielnia.ui.MainUI;
@@ -17,10 +18,10 @@ public class AccessError extends HorizontalLayout implements View {
     @Autowired
     public AccessError(MainUI ad,MessageSource messageSource) {
         this.ad = ad;
-        ad.header.setHeadline("Error");
+        ad.header.setHeadline(messageSource.getMessage("common.error",null, UI.getCurrent().getLocale()));
         ad.header.setBackButton(true, false);
 
-        Label label = new Label("Brak Dostepu!");
+        Label label = new Label(messageSource.getMessage("common.access",null, UI.getCurrent().getLocale()));
         label.setStyleName("h1");
         this.addComponent(label);
 

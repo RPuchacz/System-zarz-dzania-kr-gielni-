@@ -59,7 +59,7 @@ public class SetReservationUi extends FormLayout implements View {
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-        ad.header.setHeadline("Nowa Rezerwacja");
+        ad.header.setHeadline(messageSource.getMessage("common.newReservation",null, UI.getCurrent().getLocale()));
         setHeight("474px");
         setWidth("1250px");
         ad.header.setBackButton(true,false);
@@ -68,17 +68,17 @@ public class SetReservationUi extends FormLayout implements View {
         hl = new VerticalLayout();
         vl = new HorizontalLayout();
         personGrid = new Grid<>();
-        reservationButton = new Button("Rezerwuj");
+        reservationButton = new Button(messageSource.getMessage("common.reserve",null, UI.getCurrent().getLocale()));
         startTime = new DateTimeField();
         time = new NativeSelect<>();
         alleyNativeSelect = new NativeSelect<>();
         personGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
         personSingleSelectionModel = (SingleSelectionModel<Person>) personGrid.getSelectionModel();
         time.setItems(1,2,3,4,5,6,7,8,9,10);
-        panel = new Panel("Rezerwacje dla wybranego Toru");
+        panel = new Panel(messageSource.getMessage("common.reservationsForAlley",null, UI.getCurrent().getLocale()));
         fl = new FormLayout();
         window = new Window();
-        showReservations = new Button("Pokaz Rezerwacje");
+        showReservations = new Button(messageSource.getMessage("common.showReservations",null, UI.getCurrent().getLocale()));
         showReservations.setEnabled(false);
 
 
@@ -87,9 +87,9 @@ public class SetReservationUi extends FormLayout implements View {
         alleyNativeSelect.setItems(alleyRepository.findAll());
 
 
-        alleyNativeSelect.setCaption("Wybierz Tor");
-        startTime.setCaption("Poczatek Rezerwacji");
-        time.setCaption("Czas trwania");
+        alleyNativeSelect.setCaption(messageSource.getMessage("common.chooseAlley",null, UI.getCurrent().getLocale()));
+        startTime.setCaption(messageSource.getMessage("common.start",null, UI.getCurrent().getLocale()));
+        time.setCaption(messageSource.getMessage("common.timeframe",null, UI.getCurrent().getLocale()));
         alleyNativeSelect.setVisibleItemCount(5);
 
         personGrid.addSelectionListener(event -> {
@@ -122,8 +122,8 @@ public class SetReservationUi extends FormLayout implements View {
             reservation.setTime(time.getValue());
             reservationRepository.save(reservation);
             try {
-                Sender.sendEmail(personSingleSelectionModel.getSelectedItem().get().getMail(),"Dziekujemy za Rezerwacje!","Dziekujemy za rezerwacje toru w dniu " +
-                       startTime.getValue().toLocalDate() + " w godzinach od " + startTime.getValue().toLocalTime());
+                Sender.sendEmail(personSingleSelectionModel.getSelectedItem().get().getMail(),messageSource.getMessage("common.thanks",null, UI.getCurrent().getLocale()),messageSource.getMessage("common.info",null, UI.getCurrent().getLocale())+ " " +
+                       startTime.getValue().toLocalDate() + " " +messageSource.getMessage("common.detailedInfo",null, UI.getCurrent().getLocale())+" " + startTime.getValue().toLocalTime());
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
@@ -145,10 +145,10 @@ public class SetReservationUi extends FormLayout implements View {
         showReservations.addClickListener(event -> {
             fl.removeAllComponents();
             if (reservations.size() == 0) {
-                fl.addComponent(new Label("Brak rezerwacji tego dnia"));
+                fl.addComponent(new Label(messageSource.getMessage("common.noReservation",null, UI.getCurrent().getLocale())));
             }
             for(Reservation r : reservations) {
-                fl.addComponent(new Label("Rezerwacja : " + " " + r.getStartDate().toLocalDate() + " " + r.getStartDate().getHour() + ":" + r.getStartDate().getMinute() + " do " + r.getStartDate().plusHours(r.getTime()).getHour()+":"+r.getStartDate().getMinute()));
+                fl.addComponent(new Label(messageSource.getMessage("common.res",null, UI.getCurrent().getLocale()) + " : " + " " + r.getStartDate().toLocalDate() + " " + r.getStartDate().getHour() + ":" + r.getStartDate().getMinute() + " " + messageSource.getMessage("common.to",null, UI.getCurrent().getLocale()) + " " + r.getStartDate().plusHours(r.getTime()).getHour()+":"+r.getStartDate().getMinute()));
             }
             panel.setContent(fl);
             window.setContent(panel);
@@ -168,10 +168,10 @@ public class SetReservationUi extends FormLayout implements View {
         hsplit.setLocked(true);
 
         personGrid.removeAllColumns();
-        personGrid.setCaption("Wybierz Osobe");
-        personGrid.addColumn(Person::getFirstName).setCaption("Imie");
-        personGrid.addColumn(Person::getLastName).setCaption("Nazwisko");
-        personGrid.addColumn(Person::getPhoneNumber).setCaption("Telefon");
+        personGrid.setCaption(messageSource.getMessage("common.choosePerson",null, UI.getCurrent().getLocale()));
+        personGrid.addColumn(Person::getFirstName).setCaption(messageSource.getMessage("common.firstName",null, UI.getCurrent().getLocale()));
+        personGrid.addColumn(Person::getLastName).setCaption(messageSource.getMessage("common.lastName",null, UI.getCurrent().getLocale()));
+        personGrid.addColumn(Person::getPhoneNumber).setCaption(messageSource.getMessage("common.phoneNumber",null, UI.getCurrent().getLocale()));
 
 
     }
@@ -181,7 +181,7 @@ public class SetReservationUi extends FormLayout implements View {
         ad.header.setBackButton(true,false);
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-        ad.header.setHeadline("Nowa Rezerwacja");
+        ad.header.setHeadline("");
         roleAuth.Auth(Role.ADMIN, Role.EMPLOYEE);
         vl.removeAllComponents();
     }

@@ -51,15 +51,15 @@ public class NewsletterUI extends HorizontalLayout implements View {
         ad.header.setBackButton(true, false);
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-        ad.header.setHeadline("Newsletter");
+        ad.header.setHeadline(messageSource.getMessage("common.newsletter",null, UI.getCurrent().getLocale()));
 
         setStyleName("newLayout");
 
-        titleField = new TextField("Tytuł");
-        contentLbl = new Label("Treść wiadomości");
+        titleField = new TextField(messageSource.getMessage("common.title",null, UI.getCurrent().getLocale()));
+        contentLbl = new Label(messageSource.getMessage("common.content",null, UI.getCurrent().getLocale()));
         textEditorBtn = new Button("Text Editor");
         textHtmlBtn = new Button("Text Html");
-        sendBtn = new Button("Wyślij");
+        sendBtn = new Button(messageSource.getMessage("common.send",null, UI.getCurrent().getLocale()));
 
         textEditor.setHeight(400, Unit.PIXELS);
         textEditor.setWidth(1000, Unit.PIXELS);
@@ -82,7 +82,7 @@ public class NewsletterUI extends HorizontalLayout implements View {
 
         sendBtn.addClickListener(event -> {
             sendEmails(personRepository, mailRepository);
-            Notification.show("Wysłano wiadomość");
+            Notification.show(messageSource.getMessage("common.sended",null, UI.getCurrent().getLocale()));
         });
 
 

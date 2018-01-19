@@ -51,7 +51,7 @@ public class AlleyUi extends FormLayout implements View {
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-        ad.header.setHeadline("Tory");
+        ad.header.setHeadline(messageSource.getMessage("common.alleys",null, UI.getCurrent().getLocale()));
         ad.header.setBackButton(true,false);
 
         setHeight("874px");
@@ -60,10 +60,10 @@ public class AlleyUi extends FormLayout implements View {
         roleAuth = new RoleAuth(personRepository);
         hsplit = new HorizontalSplitPanel();
         binder = new Binder<>(Alley.class);
-        name = new TextField("Nazwa");
-        price = new TextField("Cena");
-        maxNumberOfPeople = new TextField("Maksymalna liczba osob");
-        saveButton = new Button("Zapisz");
+        name = new TextField(messageSource.getMessage("common.name",null, UI.getCurrent().getLocale()));
+        price = new TextField(messageSource.getMessage("common.price",null, UI.getCurrent().getLocale()));
+        maxNumberOfPeople = new TextField(messageSource.getMessage("common.maxPersons",null, UI.getCurrent().getLocale()));
+        saveButton = new Button(messageSource.getMessage("common.save",null, UI.getCurrent().getLocale()));
         alleyGrid = new Grid<>();
         alleyGrid.setItems(alleyRepository.findAll());
         alleyGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
@@ -81,7 +81,7 @@ public class AlleyUi extends FormLayout implements View {
         vlform.addComponents(name,price,maxNumberOfPeople,saveButton);
 
 
-        newButton = new Button("New Alley", event -> {
+        newButton = new Button(messageSource.getMessage("common.newAlley",null, UI.getCurrent().getLocale()), event -> {
             a = new Alley();
             binder.setBean(a);
             hsplit.setSecondComponent(vlform);
@@ -94,7 +94,7 @@ public class AlleyUi extends FormLayout implements View {
             });
         });
 
-        editButton = new Button("Edit Alley", event -> {
+        editButton = new Button(messageSource.getMessage("common.editAlley",null, UI.getCurrent().getLocale()), event -> {
             binder.setBean(singleSelectionModel.asSingleSelect().getValue());
             hsplit.setSecondComponent(vlform);
             saveButton.addClickListener(event1 -> {
@@ -106,7 +106,7 @@ public class AlleyUi extends FormLayout implements View {
             });
         });
 
-        deleteButton = new Button("Delete Alley", event -> {
+        deleteButton = new Button(messageSource.getMessage("common.deleteAlley",null, UI.getCurrent().getLocale()), event -> {
             alleyRepository.delete(alleyGrid.getSelectedItems());
             alleyGrid.setItems();
             alleyGrid.setItems(alleyRepository.findAll());
@@ -117,9 +117,9 @@ public class AlleyUi extends FormLayout implements View {
         });
 
 
-        alleyGrid.addColumn(Alley::getName).setCaption("Nazwa");
-        alleyGrid.addColumn(Alley::getPrice).setCaption("Cena");
-        alleyGrid.addColumn(Alley::getMaxPersons).setCaption("Liczba Osob");
+        alleyGrid.addColumn(Alley::getName).setCaption(messageSource.getMessage("common.name",null, UI.getCurrent().getLocale()));
+        alleyGrid.addColumn(Alley::getPrice).setCaption(messageSource.getMessage("common.price",null, UI.getCurrent().getLocale()));
+        alleyGrid.addColumn(Alley::getMaxPersons).setCaption(messageSource.getMessage("common.nPersons",null, UI.getCurrent().getLocale()));
 
         alleyGrid.addSelectionListener(event -> {
             editButton.setEnabled(true);
@@ -142,11 +142,11 @@ public class AlleyUi extends FormLayout implements View {
         ad.header.setBackButton(true,false);
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-        ad.header.setHeadline("Tory");
         roleAuth.Auth(Role.ADMIN, Role.EMPLOYEE);
         hsplit.removeComponent(vlform);
         singleSelectionModel.deselectAll();
         editButton.setEnabled(false);
+        ad.header.setHeadline("");
         deleteButton.setEnabled(false);
     }
 }

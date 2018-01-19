@@ -72,7 +72,7 @@ public class Customer extends FormLayout implements View {
      roleAuth = new RoleAuth(personRepository);
      ad.header.addComponent(ad.header.headlineLayout);
      ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-     ad.header.setHeadline("Klienci");
+     ad.header.setHeadline(messageSource.getMessage("common.clients",null, UI.getCurrent().getLocale()));
 
      setHeight("874px");
      setWidth("1250px");
@@ -98,20 +98,20 @@ public class Customer extends FormLayout implements View {
         person = personRepository.findByLogin(l);
         binder = new Binder<>(Person.class);
         singleSelectionModel = (SingleSelectionModel<Person>) personGrid.getSelectionModel();
-        firstName = new TextField("Imie");
-        lastName = new TextField("Nazwisko");
-        login = new TextField("Login");
-        password = new PasswordField("Haslo");
-        phoneNumber = new TextField("Numer Telefonu");
-        mail = new TextField("E-mail");
-        country = new TextField("Kraj");
-        city = new TextField("Miasto");
-        street = new TextField("Ulica");
-        postalCode = new TextField("Kod Pocztowy");
-        dateOfBirth = new DateField("Data Urodzenia");
-        newsletter = new CheckBox("Newsletter");
-        role = new ComboBox("Uprawnienia");
-        saveButton = new Button("Zapisz");
+        firstName = new TextField(messageSource.getMessage("common.firstName",null, UI.getCurrent().getLocale()));
+        lastName = new TextField(messageSource.getMessage("common.lastName",null, UI.getCurrent().getLocale()));
+        login = new TextField(messageSource.getMessage("common.login",null, UI.getCurrent().getLocale()));
+        password = new PasswordField(messageSource.getMessage("common.password",null, UI.getCurrent().getLocale()));
+        phoneNumber = new TextField(messageSource.getMessage("common.phoneNumber",null, UI.getCurrent().getLocale()));
+        mail = new TextField(messageSource.getMessage("common.mail",null, UI.getCurrent().getLocale()));
+        country = new TextField(messageSource.getMessage("common.country",null, UI.getCurrent().getLocale()));
+        city = new TextField(messageSource.getMessage("common.city",null, UI.getCurrent().getLocale()));
+        street = new TextField(messageSource.getMessage("common.street",null, UI.getCurrent().getLocale()));
+        postalCode = new TextField(messageSource.getMessage("common.postalCode",null, UI.getCurrent().getLocale()));
+        dateOfBirth = new DateField(messageSource.getMessage("common.birthDate",null, UI.getCurrent().getLocale()));
+        newsletter = new CheckBox(messageSource.getMessage("common.newsletter",null, UI.getCurrent().getLocale()));
+        role = new ComboBox(messageSource.getMessage("common.role",null, UI.getCurrent().getLocale()));
+        saveButton = new Button(messageSource.getMessage("common.save",null, UI.getCurrent().getLocale()));
 
         singleSelectionModel.setDeselectAllowed(false);
         singleSelectionModel.deselectAll();
@@ -139,7 +139,7 @@ public class Customer extends FormLayout implements View {
 
         vlform.addComponents(vlPerson,vlAddress);
 
-        newButton = new Button("New Person", event -> {
+        newButton = new Button(messageSource.getMessage("common.newPerson",null, UI.getCurrent().getLocale()), event -> {
             p = new Person();
             a = new Address();
             role.addValueChangeListener(event1 -> {
@@ -157,7 +157,7 @@ public class Customer extends FormLayout implements View {
             });
         });
 
-        editButton = new Button("Edit Person", event -> {
+        editButton = new Button(messageSource.getMessage("common.editPerson",null, UI.getCurrent().getLocale()), event -> {
             binder.setBean(singleSelectionModel.asSingleSelect().getValue());
             hsplit.setSecondComponent(vlform);
             role.setValue(binder.getBean().getRole());
@@ -173,7 +173,7 @@ public class Customer extends FormLayout implements View {
             });
         });
 
-        deleteButton = new Button("Delete Person", event -> {
+        deleteButton = new Button(messageSource.getMessage("common.deletePerson",null, UI.getCurrent().getLocale()), event -> {
             personRepository.delete(personGrid.getSelectedItems());
             personGrid.setItems();
             personGrid.setItems(personRepository.findAll());
@@ -184,11 +184,11 @@ public class Customer extends FormLayout implements View {
         });
 
 
-        personGrid.addColumn(Person::getFirstName).setCaption("Imie");
-        personGrid.addColumn(Person::getLastName).setCaption("Nazwisko");
-        personGrid.addColumn(Person::getPhoneNumber).setCaption("Telefon");
-        personGrid.addColumn(Person::getMail).setCaption("E-mail");
-        personGrid.addColumn(Person::getLoyalPoints).setCaption("Punkty");
+        personGrid.addColumn(Person::getFirstName).setCaption(messageSource.getMessage("common.firstName",null, UI.getCurrent().getLocale()));
+        personGrid.addColumn(Person::getLastName).setCaption(messageSource.getMessage("common.lastName",null, UI.getCurrent().getLocale()));
+        personGrid.addColumn(Person::getPhoneNumber).setCaption(messageSource.getMessage("common.phoneNumber",null, UI.getCurrent().getLocale()));
+        personGrid.addColumn(Person::getMail).setCaption(messageSource.getMessage("common.mail",null, UI.getCurrent().getLocale()));
+        personGrid.addColumn(Person::getLoyalPoints).setCaption(messageSource.getMessage("common.point",null, UI.getCurrent().getLocale()));
 
         personGrid.addSelectionListener(event -> {
                 editButton.setEnabled(true);
@@ -205,7 +205,7 @@ public class Customer extends FormLayout implements View {
         ad.header.setBackButton(true,false);
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-        ad.header.setHeadline("Klienci");
+        ad.header.setHeadline("");
         roleAuth.Auth(Role.ADMIN, Role.EMPLOYEE);
         singleSelectionModel.deselectAll();
         hsplit.removeComponent(vlform);

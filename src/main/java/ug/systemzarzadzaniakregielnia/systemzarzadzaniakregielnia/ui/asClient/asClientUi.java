@@ -61,7 +61,7 @@ public class asClientUi extends FormLayout implements View {
         roleAuth = new RoleAuth(personRepository);
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
-        ad.header.setHeadline("Informacje");
+        ad.header.setHeadline(messageSource.getMessage("common.information",null, UI.getCurrent().getLocale()));
         setWidth("1550px");
 
 
@@ -89,25 +89,25 @@ public class asClientUi extends FormLayout implements View {
         fl = new FormLayout();
         reservationList = reservationRepository.getAllByPerson(person);
         reservationLayout = new VerticalLayout();
-        reservationLayout.setCaption("Rezerwacje");
+        reservationLayout.setCaption(messageSource.getMessage("common.reservations",null, UI.getCurrent().getLocale()));
 
 
 
         fl.setSizeFull();
 
-        info.setCaption("Informacje");
-        address.setCaption("Adres : ");
-        firstName.setCaption("Imie :");
-        lastName.setCaption("Nazwisko : ");
-        login.setCaption("Login : ");
-        mail.setCaption("E-Mail : ");
-        phoneNumber.setCaption("Numer Telefonu : ");
-        dateOfBirth.setCaption("Data Urodzenia : ");
-        loyaltyPoints.setCaption("Punkty Lojalnosciowe : ");
-        country.setCaption("Panstwo : ");
-        city.setCaption("Miasto : ");
-        street.setCaption("Ulica : ");
-        postalCode.setCaption("Kod Pocztowy : ");
+        info.setCaption(messageSource.getMessage("common.information",null, UI.getCurrent().getLocale()));
+        address.setCaption(messageSource.getMessage("common.address",null, UI.getCurrent().getLocale()) + " : ");
+        firstName.setCaption(messageSource.getMessage("common.firstName",null, UI.getCurrent().getLocale()) + " : ");
+        lastName.setCaption(messageSource.getMessage("common.lastName",null, UI.getCurrent().getLocale()) + " : ");
+        login.setCaption(messageSource.getMessage("common.login",null, UI.getCurrent().getLocale()) + " : ");
+        mail.setCaption(messageSource.getMessage("common.mail",null, UI.getCurrent().getLocale()) + " : ");
+        phoneNumber.setCaption(messageSource.getMessage("common.phoneNumber",null, UI.getCurrent().getLocale()) + " : ");
+        dateOfBirth.setCaption(messageSource.getMessage("common.birthDate",null, UI.getCurrent().getLocale()) + " : ");
+        loyaltyPoints.setCaption(messageSource.getMessage("common.loyaltyPoints",null, UI.getCurrent().getLocale()) + " : ");
+        country.setCaption(messageSource.getMessage("common.country",null, UI.getCurrent().getLocale()) + " : ");
+        city.setCaption(messageSource.getMessage("common.city",null, UI.getCurrent().getLocale()) + " : ");
+        street.setCaption(messageSource.getMessage("common.street",null, UI.getCurrent().getLocale()) + " : ");
+        postalCode.setCaption(messageSource.getMessage("common.postalCode",null, UI.getCurrent().getLocale()) + " : ");
 
 
         newsletter.setValue(person.getNewsletter());
@@ -130,8 +130,8 @@ public class asClientUi extends FormLayout implements View {
 
 
         for(Reservation r : reservationList){
-            reservationLayout.addComponent(new ReservationPanel("Rezerwacja dnia : " + r.getStartDate().toLocalDate() + " Godzina " + r.getStartDate().getHour()+":"+r.getStartDate().getMinute(),
-                    r.getAlley().getPrice().toString(),r.getAlley().getMaxPersons().toString(),r.getAlley().getName(),""+r.getTime(),r.getPerson().getFirstName() + " " + r.getPerson().getLastName()));
+            reservationLayout.addComponent(new ReservationPanel(messageSource.getMessage("common.dayReservation" + " ",null, UI.getCurrent().getLocale()) + r.getStartDate().toLocalDate() + " : " + r.getStartDate().getHour()+":"+r.getStartDate().getMinute(),
+                    r.getAlley().getPrice().toString(),r.getAlley().getMaxPersons().toString(),r.getAlley().getName(),""+r.getTime(),r.getPerson().getFirstName() + " " + r.getPerson().getLastName(),messageSource));
         }
 
         fl.setSizeFull();
@@ -156,7 +156,7 @@ public class asClientUi extends FormLayout implements View {
         ad.header.setBackButton(true,false);
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-        ad.header.setHeadline("Informacje");
+        ad.header.setHeadline("");
         roleAuth.Auth(Role.ADMIN, Role.EMPLOYEE, Role.CLIENT);
     }
 }

@@ -54,7 +54,7 @@ public class ReservationUi extends FormLayout implements View {
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-        ad.header.setHeadline("Rezerwacje");
+        ad.header.setHeadline(messageSource.getMessage("common.reservations",null, UI.getCurrent().getLocale()));
 
         setHeight("674px");
         setWidth("1250px");
@@ -62,12 +62,12 @@ public class ReservationUi extends FormLayout implements View {
 
         reservationGrid = new Grid<>(Reservation.class);
         hsplit = new HorizontalSplitPanel();
-        stateSelect = new NativeSelect<>("Stan Rezerwacji");
-        clean = new Button("Usun filtr");
+        stateSelect = new NativeSelect<>(messageSource.getMessage("common.reservationState",null, UI.getCurrent().getLocale()));
+        clean = new Button(messageSource.getMessage("common.deleteFilter",null, UI.getCurrent().getLocale()));
         singleSelectionModel = (SingleSelectionModel<Reservation>) reservationGrid.getSelectionModel();
         setState  = new NativeSelect<>();
-        saveButton = new Button("Zapisz");
-        delete = new Button("Anuluj Rezerwacje");
+        saveButton = new Button(messageSource.getMessage("common.save",null, UI.getCurrent().getLocale()));
+        delete = new Button(messageSource.getMessage("common.deleteReservation",null, UI.getCurrent().getLocale()));
         hl = new HorizontalLayout();
         firstName = new Label();
         lastName = new Label();
@@ -76,15 +76,15 @@ public class ReservationUi extends FormLayout implements View {
         price = new Label();
         startDate = new Label();
         time = new Label();
-        edit = new Button("Edytuj");
+        edit = new Button(messageSource.getMessage("common.editReservation",null, UI.getCurrent().getLocale()));
 
-        price.setCaption("Cena za godzine");
-        firstName.setCaption("Imie");
-        lastName.setCaption("Nazwisko");
-        mail.setCaption("E-Mail");
-        phoneNumber.setCaption("Numer Telefonu");
-        startDate.setCaption("Poczatek");
-        time.setCaption("Czas trwania");
+        price.setCaption(messageSource.getMessage("common.pricePerHour",null, UI.getCurrent().getLocale()));
+        firstName.setCaption(messageSource.getMessage("common.firstName",null, UI.getCurrent().getLocale()));
+        lastName.setCaption(messageSource.getMessage("common.lastName",null, UI.getCurrent().getLocale()));
+        mail.setCaption(messageSource.getMessage("common.mail",null, UI.getCurrent().getLocale()));
+        phoneNumber.setCaption(messageSource.getMessage("common.phoneNumber",null, UI.getCurrent().getLocale()));
+        startDate.setCaption(messageSource.getMessage("common.start",null, UI.getCurrent().getLocale()));
+        time.setCaption(messageSource.getMessage("common.timeframe",null, UI.getCurrent().getLocale()));
 
         singleSelectionModel.setDeselectAllowed(false);
         reservationGrid.setItems(reservationRepository.findAll());
@@ -92,13 +92,21 @@ public class ReservationUi extends FormLayout implements View {
         setState.setItems(EnumSet.allOf(State.class));
         edit.setEnabled(false);
         delete.setEnabled(false);
-        setState.setCaption("Status Rezerwacji");
+        setState.setCaption(messageSource.getMessage("common.reservationStatus",null, UI.getCurrent().getLocale()));
 
 
         hsplit.setFirstComponent(new VerticalLayout(new HorizontalLayout(stateSelect,clean,edit,delete),reservationGrid));
         hsplit.setSecondComponent(hl);
         hsplit.setSizeFull();
         addComponent(hsplit);
+
+        reservationGrid.removeAllColumns();
+        reservationGrid.addColumn(Reservation::getPerson).setCaption(messageSource.getMessage("common.p",null, UI.getCurrent().getLocale()));
+        reservationGrid.addColumn(Reservation::getStartDate).setCaption(messageSource.getMessage("common.d",null, UI.getCurrent().getLocale()));
+        reservationGrid.addColumn(Reservation::getTime).setCaption(messageSource.getMessage("common.t",null, UI.getCurrent().getLocale()));
+        reservationGrid.addColumn(Reservation::getState).setCaption(messageSource.getMessage("common.s",null, UI.getCurrent().getLocale()));
+        reservationGrid.addColumn(Reservation::getAlley).setCaption(messageSource.getMessage("common.a",null, UI.getCurrent().getLocale()));
+
 
 
         stateSelect.addSelectionListener(event -> {
@@ -157,7 +165,7 @@ public class ReservationUi extends FormLayout implements View {
         ad.header.setBackButton(true,false);
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-        ad.header.setHeadline("Rezerwacje");
+        ad.header.setHeadline("");
         roleAuth.Auth(Role.ADMIN, Role.EMPLOYEE);
 
     }
