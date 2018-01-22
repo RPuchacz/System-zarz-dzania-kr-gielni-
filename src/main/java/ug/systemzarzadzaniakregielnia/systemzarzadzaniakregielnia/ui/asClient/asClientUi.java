@@ -96,7 +96,7 @@ public class asClientUi extends FormLayout implements View {
 
         hl.setStyleName("forClient");
 
-        info.setCaption(messageSource.getMessage("common.information",null, UI.getCurrent().getLocale()));
+        info.setCaption(messageSource.getMessage("common.information",null, UI.getCurrent().getLocale())+ " : ");
         address.setCaption(messageSource.getMessage("common.address",null, UI.getCurrent().getLocale()) + " : ");
         firstName.setCaption(messageSource.getMessage("common.firstName",null, UI.getCurrent().getLocale()) + " : ");
         lastName.setCaption(messageSource.getMessage("common.lastName",null, UI.getCurrent().getLocale()) + " : ");
@@ -110,7 +110,7 @@ public class asClientUi extends FormLayout implements View {
         street.setCaption(messageSource.getMessage("common.street",null, UI.getCurrent().getLocale()) + " : ");
         postalCode.setCaption(messageSource.getMessage("common.postalCode",null, UI.getCurrent().getLocale()) + " : ");
 
-
+        info.setStyleName("asClient_infoCaption");
         newsletter.setValue(person.getNewsletter());
 
         info.addComponents(firstName,login,mail,phoneNumber,dateOfBirth,loyaltyPoints);
