@@ -52,7 +52,7 @@ public class asClientUi extends FormLayout implements View {
     private Label city;
     private Label street;
     private Label postalCode;
-    private FormLayout fl;
+
 
 
 
@@ -62,13 +62,13 @@ public class asClientUi extends FormLayout implements View {
         this.ad = ad;
         ad.header.addComponent(ad.header.headlineLayout);
         ad.header.setHeadline(messageSource.getMessage("common.information",null, UI.getCurrent().getLocale()));
-        setWidth("1550px");
+
 
 
         person = personRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
 
         hsp = new HorizontalSplitPanel();
-        hsp.setWidth("1250px");
+
         hsp.setSplitPosition(56, Unit.PERCENTAGE);
         hsp.setLocked(true);
         info = new VerticalLayout();
@@ -86,14 +86,15 @@ public class asClientUi extends FormLayout implements View {
         city = new Label(person.getAddress().getCity());
         street = new Label(person.getAddress().getStreet());
         postalCode = new Label(person.getAddress().getPostalCode());
-        fl = new FormLayout();
+
         reservationList = reservationRepository.getAllByPerson(person);
         reservationLayout = new VerticalLayout();
         reservationLayout.setCaption(messageSource.getMessage("common.reservations",null, UI.getCurrent().getLocale()));
 
 
 
-        fl.setWidth("600px");
+
+        hl.setStyleName("forClient");
 
         info.setCaption(messageSource.getMessage("common.information",null, UI.getCurrent().getLocale()));
         address.setCaption(messageSource.getMessage("common.address",null, UI.getCurrent().getLocale()) + " : ");
@@ -115,6 +116,7 @@ public class asClientUi extends FormLayout implements View {
         info.addComponents(firstName,login,mail,phoneNumber,dateOfBirth,loyaltyPoints);
         address.addComponents(country,city,street,postalCode,newsletter);
 
+
         hl.addComponents(info,address);
 
 
@@ -123,7 +125,7 @@ public class asClientUi extends FormLayout implements View {
             personRepository.save(person);
         });
 
-        fl.addComponent(hl);
+
 
         setSizeFull();
         ad.header.setBackButton(true,false);
@@ -134,9 +136,10 @@ public class asClientUi extends FormLayout implements View {
                     r.getAlley().getPrice().toString(),r.getAlley().getMaxPersons().toString(),r.getAlley().getName(),""+r.getTime(),r.getPerson().getFirstName() + " " + r.getPerson().getLastName(),messageSource));
         }
 
-        fl.setSizeFull();
-        hsp.setSizeFull();
-        hsp.setFirstComponent(fl);
+        reservationLayout.setStyleName("forClient_reservation");
+
+
+        hsp.setFirstComponent(hl);
         hsp.setSecondComponent(reservationLayout);
         addComponent(hsp);
 

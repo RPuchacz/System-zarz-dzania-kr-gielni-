@@ -35,7 +35,9 @@ $v-app-loading-text: "Loading...";
       font-size: calc(10px + 0.5vw);
       font-family: "Verdana";
       color: #221b7b;
-      float: left;
+      float:left;
+
+
 
         .v-link{
           font-weight: bold;
@@ -93,7 +95,49 @@ $v-app-loading-text: "Loading...";
      }
 
 
+    .forClient{
+    background-color: white;
+
+    width: 650px;
+    padding: 20px;
+
+
+    }
+
+    .forClient > * > * > *  > *  {
+
+ font-size:16px;
+
+
+        }
+
+    .forClient > * > * > * > * > * > * > *  {
+
+font-weight: bold;
+ font-size:16px;
+
+
+        }
+
+
+    .forClient_reservation{
+ background-color: white;
+ text-align:center;
+ width: 510px;
+    }
+
+        .forClient_reservation > * > *{
+     background-color: #fffae6;
+     font-weight: bold;
+
+        }
+
+
+
 }
 
 
 @include bowlingmanager;
+
+
+
