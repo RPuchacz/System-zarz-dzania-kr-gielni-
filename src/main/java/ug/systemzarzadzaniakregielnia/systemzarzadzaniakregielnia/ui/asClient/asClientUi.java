@@ -93,7 +93,7 @@ public class asClientUi extends FormLayout implements View {
 
 
 
-        fl.setSizeFull();
+        fl.setWidth("600px");
 
         info.setCaption(messageSource.getMessage("common.information",null, UI.getCurrent().getLocale()));
         address.setCaption(messageSource.getMessage("common.address",null, UI.getCurrent().getLocale()) + " : ");
@@ -130,7 +130,7 @@ public class asClientUi extends FormLayout implements View {
 
 
         for(Reservation r : reservationList){
-            reservationLayout.addComponent(new ReservationPanel(messageSource.getMessage("common.dayReservation" + " ",null, UI.getCurrent().getLocale()) + r.getStartDate().toLocalDate() + " : " + r.getStartDate().getHour()+":"+r.getStartDate().getMinute(),
+            reservationLayout.addComponent(new ReservationPanel(messageSource.getMessage("common.dayReservation",null, UI.getCurrent().getLocale()) + " " +r.getStartDate().toLocalDate() + " : " + r.getStartDate().getHour()+":"+r.getStartDate().getMinute(),
                     r.getAlley().getPrice().toString(),r.getAlley().getMaxPersons().toString(),r.getAlley().getName(),""+r.getTime(),r.getPerson().getFirstName() + " " + r.getPerson().getLastName(),messageSource));
         }
 

@@ -14,7 +14,7 @@ public class Person extends AbstractEntity {
     @Enumerated
     private Role role = Role.CLIENT;
     //@NotNull(message = "Pole nie moze byc puste")
-   // @Size(min = 3, max = 14, message = "Min. 3")
+    //@Size(min = 3, max = 14, message = "Min. 3")
     private String firstName;
     //@NotNull(message = "Pole nie moze byc puste")
     //@Size(min = 3, max = 20, message = "Min. 3")
