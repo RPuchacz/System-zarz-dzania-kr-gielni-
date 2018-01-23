@@ -57,7 +57,7 @@ public class ReservationUi extends FormLayout implements View {
         ad.header.setHeadline(messageSource.getMessage("common.reservations",null, UI.getCurrent().getLocale()));
 
         setHeight("674px");
-        setWidth("1250px");
+        setWidth("1350px");
         ad.header.setBackButton(true,false);
 
         reservationGrid = new Grid<>(Reservation.class);
@@ -158,6 +158,8 @@ public class ReservationUi extends FormLayout implements View {
             time.setValue(""+singleSelectionModel.getSelectedItem().get().getTime());
             hl.addComponents(new VerticalLayout(firstName,lastName,mail,phoneNumber),new VerticalLayout(price,startDate,time,setState,saveButton));
         });
+
+        hl.setStyleName("Reservation_hl");
     }
 
     @Override
