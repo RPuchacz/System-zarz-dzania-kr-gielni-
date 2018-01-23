@@ -81,7 +81,7 @@ public class Customer extends FormLayout implements View {
 
      hsplit = new HorizontalSplitPanel();
      hsplit.setSizeFull();
-   
+
 
      addComponent(hsplit);
 

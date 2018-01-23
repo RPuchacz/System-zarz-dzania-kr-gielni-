@@ -12,6 +12,8 @@ $v-app-loading-text: "Loading...";
 @mixin bowlingmanager {
   @include valo;
 
+
+
   .toolbar {
        padding:  0 0 0 0;
      }
@@ -30,12 +32,18 @@ $v-app-loading-text: "Loading...";
         padding: 5px;
 
 
+
     }
     .januszProgramowania{
       font-size: calc(10px + 0.5vw);
       font-family: "Verdana";
+
+      margin-left: -12%;
       color: #221b7b;
-      float:left;
+                text-align: center;
+                float: left;
+
+
 
 
 
@@ -43,9 +51,11 @@ $v-app-loading-text: "Loading...";
           font-weight: bold;
           font-style: italic;
           color: rgb(0, 0, 0) !important;
+          text-align: center;
         }
     }
     .BackButton{
+
     height: 150px;
 
     }
