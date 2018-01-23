@@ -49,9 +49,8 @@ public class NewsletterUI extends HorizontalLayout implements View {
         roleAuth = new RoleAuth(personRepository);
 
         ad.header.setBackButton(true, false);
-        ad.header.addComponent(ad.header.headlineLayout);
-        ad.header.setComponentAlignment(ad.header.headlineLayout, Alignment.TOP_CENTER);
-        ad.header.setHeadline(messageSource.getMessage("common.newsletter",null, UI.getCurrent().getLocale()));
+
+
 
         setStyleName("newLayout");
 
@@ -61,10 +60,10 @@ public class NewsletterUI extends HorizontalLayout implements View {
         textHtmlBtn = new Button("Text Html");
         sendBtn = new Button(messageSource.getMessage("common.send",null, UI.getCurrent().getLocale()));
 
-        textEditor.setHeight(400, Unit.PIXELS);
+        textEditor.setHeight(370, Unit.PIXELS);
         textEditor.setWidth(1000, Unit.PIXELS);
 
-        textHtml.setHeight(400, Unit.PIXELS);
+        textHtml.setHeight(370, Unit.PIXELS);
         textHtml.setWidth(1000, Unit.PIXELS);
         textHtml.setVisible(false);
 
